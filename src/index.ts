@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import UserRouter from "./routes/userRouter";
 import AdminRouter from "./routes/adminRouter";
-import CourseRouter from "./routes/courseRouter"; 
+import CourseRouter from "./routes/courseRouter";
 
 const app = express();
 
