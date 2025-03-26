@@ -1,11 +1,12 @@
 import express, { Request, Response, RequestHandler } from "express";
-import { User } from "../server";
+import { Purchase, User } from "../server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { userMiddleware } from "../middleware/userMiddleware";
 
 const UserRouter = express.Router();
 
+//signin route
 const signin: RequestHandler = async (req, res) => {
   const {email,password} = req.body;
   const user = await User.findOne({email});
@@ -22,6 +23,7 @@ const signin: RequestHandler = async (req, res) => {
   res.status(200).json({token, message:"user logged in successfully"});
 };
 
+//signup route
 const signup: RequestHandler = async (req, res) => {
   const{email,password,firstName,lastName} = req.body;
   const existingUser = await User.findOne({email});
@@ -35,10 +37,20 @@ const signup: RequestHandler = async (req, res) => {
   res.status(201).json({token,message:"user created successfully"});
 };
 
+//get purchases route
 const getPurchases: RequestHandler = async (req, res) => {
-  // TODO: Implement purchases logic
+  const userId = req.userId;
+  const purchases = await Purchase.find({userId});
+  res.status(200).json({purchases});
+
+  if(!purchases){
+    res.status(400).json({message:"no purchases found"});
+    return;
+  }
+  
 };
 
+//routes
 UserRouter.post('/signin', signin);
 UserRouter.post('/signup', signup);
 UserRouter.get('/purchases', userMiddleware, getPurchases);

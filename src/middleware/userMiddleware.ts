@@ -13,16 +13,17 @@ interface JwtPayload {
   userId: string;
 }
 
-export const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const userMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.headers.authorization;
   if(!token){
-    return res.status(400).json({message:"token is required"});
+    res.status(400).json({message:"token is required"});
+    return;
   }
-  const decoded = jwt.verify(token, process.env.JWT_USER_SECRET as string) as JwtPayload;
-  if(decoded){
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_USER_SECRET as string) as JwtPayload;
     req.userId = decoded.userId;
     next();
-  }else{
-    return res.status(400).json({message:"invalid token"});
+  } catch {
+    res.status(400).json({message:"invalid token"});
   }
 };
