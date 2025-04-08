@@ -34,32 +34,56 @@ interface IPurchase extends Document {
   createdAt: Date;
 }
 
-const UserSchema = new Schema({
-  email: { type: String, required: true, unique: true, trim: true, lowercase: true },
-  password: { type: String, required: true },
-  firstName: { type: String, required: true, trim: true },
-  lastName: { type: String, required: true, trim: true },
-}, { timestamps: true });
+const UserSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+    password: { type: String, required: true },
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, required: true, trim: true },
+  },
+  { timestamps: true }
+);
 
-const adminSchema = new Schema({
-  email: { type: String, required: true, unique: true, trim: true, lowercase: true },
-  password: { type: String, required: true },
-  firstName: { type: String, required: true, trim: true },
-  lastName: { type: String, required: true, trim: true },
-}, { timestamps: true });
+const adminSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+    password: { type: String, required: true },
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, required: true, trim: true },
+  },
+  { timestamps: true }
+);
 
-const courseSchema = new Schema({
-  title: { type: String, required: true, trim: true },
-  description: { type: String, required: true, trim: true },
-  adminId: { type: ObjectId, ref: "Admin", required: true },
-  image: { type: String, required: true },
-  price: { type: Number, required: true, min: 0 },
-}, { timestamps: true });
+const courseSchema = new Schema(
+  {
+    title: { type: String, required: true, trim: true },
+    description: { type: String, required: true, trim: true },
+    adminId: { type: ObjectId, ref: "Admin", required: true },
+    image: { type: String, required: true },
+    price: { type: Number, required: true, min: 0 },
+  },
+  { timestamps: true }
+);
 
-const purchaseSchema = new Schema({
-  userId: { type: ObjectId, ref: "User", required: true },
-  courseId: { type: ObjectId, ref: "Course", required: true },
-}, { timestamps: true });
+const purchaseSchema = new Schema(
+  {
+    userId: { type: ObjectId, ref: "User", required: true },
+    courseId: { type: ObjectId, ref: "Course", required: true },
+  },
+  { timestamps: true }
+);
 
 // Add indexes for better query performance
 UserSchema.index({ email: 1 });

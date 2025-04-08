@@ -15,7 +15,6 @@ app.use("/api/v1/users", UserRouter);
 app.use("/api/v1/admins", AdminRouter);
 app.use("/api/v1/courses", CourseRouter);
 
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
