@@ -2,7 +2,7 @@ import express, { Request, Response, RequestHandler } from "express";
 import { Course, Purchase, User } from "../server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { userMiddleware } from "../middleware/userMiddleware";
+import { userMiddleware } from "../middleware/userMiddleware"
 
 const UserRouter = express.Router();
 
