@@ -2,11 +2,12 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
 import UserRouter from "./routes/userRouter";
 import AdminRouter from "./routes/adminRouter";
 import CourseRouter from "./routes/courseRouter";
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 

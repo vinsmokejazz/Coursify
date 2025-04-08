@@ -86,8 +86,6 @@ const purchaseSchema = new Schema(
 );
 
 // Add indexes for better query performance
-UserSchema.index({ email: 1 });
-adminSchema.index({ email: 1 });
 courseSchema.index({ adminId: 1 });
 purchaseSchema.index({ userId: 1, courseId: 1 }, { unique: true });
 

@@ -30,6 +30,7 @@ CourseRouter.post("/purchase", userMiddleware, async (req, res) => {
     const course = await Course.findById(courseId);
     if (!course) {
       res.status(404).json({ message: "courses not found" });
+      return;
     }
 
     //to check existing course
