@@ -15,8 +15,11 @@ AdminRouter.post('/signup',async (req,res)=>{
       return;
     }
     const hashedPassword=await bcrypt.hash(password,10);
-    await Admin.create({email,password:hashedPassword,firstName,lastName});
+    const newAdmin = await Admin.create({email,password:hashedPassword,firstName,lastName});
 
+    if (!process.env.JWT_ADMIN_SECRET) {
+      throw new Error('JWT_ADMIN_SECRET is not defined');
+    }
     const token=jwt.sign({adminId:newAdmin._id},process.env.JWT_ADMIN_SECRET) as string
     res.status(200).json({token,message:"admin created successfully"})
   } catch(error){
@@ -40,7 +43,10 @@ AdminRouter.post('/login',async(req,res)=>{
       return;
     }
     
-    const token=jwt.sign({adminId:newAdmin._id},process.env.JWT_ADMIN_SECRET) as string
+    if (!process.env.JWT_ADMIN_SECRET) {
+      throw new Error('JWT_ADMIN_SECRET is not defined');
+    }
+    const token=jwt.sign({adminId:admin._id},process.env.JWT_ADMIN_SECRET) as string
     res.status(200).json({token,message:"admin logged in successfully"})
   } catch(error){
     console.log(error)
