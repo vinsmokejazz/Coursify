@@ -1,15 +1,11 @@
 import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 
 interface JwtPayload {
   adminId: string;
 }
 
-interface CustomRequest extends Request {
-  adminId: string;
-}
-
-export const adminMiddleware = (req: CustomRequest, res: Response, next: NextFunction) => {
+export const adminMiddleware: RequestHandler = (req: Request & { adminId?: string }, res: Response, next: NextFunction) => {
   const token = req.headers.authorization;
   if (!token) {
     res.status(400).json({ message: "token required" });
