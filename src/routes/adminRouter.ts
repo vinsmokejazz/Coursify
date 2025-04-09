@@ -6,6 +6,15 @@ import { adminMiddleware } from "../middleware/adminMiddleware";
 
 const AdminRouter = express.Router();
 
+// Declare the adminId property on Express Request type
+declare global {
+  namespace Express {
+    interface Request {
+      adminId: string;
+    }
+  }
+}
+
 interface AdminSignupBody {
   email: string;
   password: string;
@@ -92,7 +101,7 @@ const loginHandler = async (req: LoginRequest, res: Response): Promise<void> => 
   }
 };
 
-const createCourseHandler = async (req: CourseRequest & { adminId: string }, res: Response): Promise<void> => {
+const createCourseHandler = async (req: CourseRequest, res: Response): Promise<void> => {
   try {
     const { title, description, image, price } = req.body;
     
@@ -124,7 +133,7 @@ const createCourseHandler = async (req: CourseRequest & { adminId: string }, res
   }
 };
 
-const updateCourseHandler = async (req: UpdateCourseRequest & { adminId: string }, res: Response): Promise<void> => {
+const updateCourseHandler = async (req: UpdateCourseRequest, res: Response): Promise<void> => {
   try {
     const courseId = req.params.courseId;
     const { title, description, image, price } = req.body;
@@ -151,7 +160,7 @@ const updateCourseHandler = async (req: UpdateCourseRequest & { adminId: string 
   }
 };
 
-const getCoursesHandler = async (req: GetCoursesRequest & { adminId: string }, res: Response): Promise<void> => {
+const getCoursesHandler = async (req: GetCoursesRequest, res: Response): Promise<void> => {
   try {
     const courses = await Course.find({ adminId: req.adminId });
     res.status(200).json({ courses });
